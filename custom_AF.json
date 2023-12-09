@@ -1,0 +1,22 @@
+{
+    "Arguments" : {
+        "A": "City budgets should prioritize public transportation.",
+        "B": "Investing in public transportation reduces traffic congestion.",
+        "C": "Public transportation investments are too costly.",
+        "D": "Improved public transportation leads to economic growth.",
+        "E": "Economic growth should be prioritized over environmental concerns.",
+        "F": "Environmental sustainability is crucial for long-term city planning.",
+        "G": "We should invest more in road infrastructure.",
+        "H": "Road infrastructure improvements can lead to more traffic congestion.",
+        "I": "New technology can make cars more environmentally friendly.",
+        "J": "Technology alone cannot solve all environmental issues."
+    },
+    
+    "Attack Relations" : [
+        ["A", "C"], ["C", "B"], ["B", "A"],
+        ["D", "C"], ["E", "F"], ["F", "E"],
+        ["G", "H"], ["H", "G"], ["I", "J"],
+        ["J", "I"], ["A", "G"], ["D", "E"],
+        ["F", "G"], ["B", "H"], ["C", "I"]
+    ]
+}
