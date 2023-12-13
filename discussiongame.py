@@ -77,6 +77,7 @@ class DiscussionGame:
             chosen_argument = random.choice(tuple(potential_attackers))
 
         if chosen_argument in self.OUT:
+            # and this is then the opposite way so rule 2
             return "Proponent wins (Rule 1)", True
 
         self.IN.add(chosen_argument)
@@ -103,6 +104,7 @@ class DiscussionGame:
         print(f"Opponent chooses argument: {chosen_argument}")
 
         if chosen_argument in self.IN:
+            # Isnt this rule one?
             return "Opponent wins (Rule 2)", True
 
         # Move chosen argument from UNDEC to OUT
@@ -137,15 +139,18 @@ def main(file_name, claimed_argument):
     R = [tuple(pair) for pair in R]
 
     framework = ArgumentationFramework(A, R)
+    
     game = DiscussionGame(framework, claimed_argument)
     game.play_game()
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Run a discussion game based on an argumentation framework.")
-    parser.add_argument("file_name", type=str, help="JSON file containing the argumentation framework.")
-    parser.add_argument("claimed_argument", type=str, help="The claimed argument to start the game.")
+    # parser = argparse.ArgumentParser(description="Run a discussion game based on an argumentation framework.")
+    # parser.add_argument("file_name", type=str, help="JSON file containing the argumentation framework.")
+    # parser.add_argument("claimed_argument", type=str, help="The claimed argument to start the game.")
 
-    args = parser.parse_args()
+    # args = parser.parse_args()
 
-    main(args.file_name, args.claimed_argument)
+    main('AF_3.json', '2')
+
+    # main(args.file_name, args.claimed_argument)

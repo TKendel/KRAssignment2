@@ -1,0 +1,13 @@
+{
+    "Arguments" : {
+        "1": "We should go to the cinema.",
+        "2": "We should go to the gym.",
+        "3": "The gym is better for the health than the cinema.",
+        "4": "We have no time for evening activities, since there is an exam coming up.",
+        "5": "The exam is in a few weeks."
+    },
+    
+    "Attack Relations" : [
+        ["1","2"], ["2","1"], ["2","3"], ["3","4"], ["4","5"], ["5","3"]
+    ]
+}
