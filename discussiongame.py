@@ -77,8 +77,7 @@ class DiscussionGame:
             chosen_argument = random.choice(tuple(potential_attackers))
 
         if chosen_argument in self.OUT:
-            # and this is then the opposite way so rule 2
-            return "Proponent wins (Rule 1)", True
+            return "Proponent wins (Rule 2)", True
 
         self.IN.add(chosen_argument)
         print(f"Proponent chooses argument: {chosen_argument}")
@@ -104,8 +103,7 @@ class DiscussionGame:
         print(f"Opponent chooses argument: {chosen_argument}")
 
         if chosen_argument in self.IN:
-            # Isnt this rule one?
-            return "Opponent wins (Rule 2)", True
+            return "Opponent wins (Rule 1)", True
 
         # Move chosen argument from UNDEC to OUT
         self.UNDEC.remove(chosen_argument)
@@ -151,6 +149,6 @@ if __name__ == "__main__":
 
     # args = parser.parse_args()
 
-    main('AF_3.json', '2')
+    main('AF_2.json', '1')
 
     # main(args.file_name, args.claimed_argument)
