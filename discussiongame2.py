@@ -1,57 +1,45 @@
 import json
 import random
 import argparse
+from itertools import combinations
 
 class ArgumentationFramework:
     def __init__(self, arguments, attacks):
-        """
-        arguments: a set of arguments
-        attacks: a list of tuples representing attack relations (attacker, attacked)
-        """
         self.arguments = arguments
         self.attacks = attacks
 
     def get_attackers(self, argument):
-        """ Return a list of arguments that attack the given argument """
         return [attacker for attacker, attacked in self.attacks if attacked == argument]
 
-    def is_conflict_free(self, args):
-        """ Check if a set of arguments is conflict-free """
-        for arg in args:
-            for attacked in args:
-                if (arg, attacked) in self.attacks:
-                    return False
-        return True
+    def is_conflict_free(self, subset):
+        return not any((a, b) in self.attacks for a in subset for b in subset)
 
-    def defends(self, args, argument):
-        """ Check if a set of arguments defends an argument """
-        for attacker in self.arguments:
-            if (attacker, argument) in self.attacks:
-                if not any((defender, attacker) in self.attacks for defender in args):
-                    return False
-        return True
+    def defends(self, subset, argument):
+        return all(any((defender, attacker) in self.attacks for defender in subset) for attacker, attacked in self.attacks if attacked == argument)
 
-    def find_admissible_sets(self):
-        """ Find all admissible sets in the framework """
-        admissible_sets = []
-        for args in self.power_set(self.arguments):
-            if self.is_conflict_free(args) and all(self.defends(args, arg) for arg in args):
-                admissible_sets.append(args)
-        return admissible_sets
+    def powerset(self):
+        return [set(subset) for r in range(len(self.arguments)+1) for subset in combinations(self.arguments, r)]
+
+    def is_admissible(self, subset):
+        if not self.is_conflict_free(subset):
+            return False
+        for arg in subset:
+            if not self.defends(subset, arg):
+                return False
+        return True
 
     def find_preferred_extensions(self):
-        """ Find all preferred extensions """
-        admissible_sets = self.find_admissible_sets()
-        return [a for a in admissible_sets if not any(set(a) < set(b) for b in admissible_sets)]
+        all_subsets = sorted(self.powerset(), key=lambda s: len(s), reverse=True)
+        preferred_extensions = []
+        for subset in all_subsets:
+            if self.is_admissible(subset):
+                if not any(subset < ext for ext in preferred_extensions):
+                    preferred_extensions.append(subset)
+        return preferred_extensions
 
-    @staticmethod
-    def power_set(s):
-        """ Generate the power set of a set """
-        s = list(s)
-        x = len(s)
-        for i in range(1 << x):
-            yield {s[j] for j in range(x) if (i & (1 << j))}
-
+    def is_credulously_accepted(self, argument):
+        preferred_extensions = self.find_preferred_extensions(self.arguments, self.attacks)
+        return any(argument in ext for ext in preferred_extensions)
 
 class DiscussionGame:
     def __init__(self, framework, claimed_argument):
@@ -149,6 +137,6 @@ if __name__ == "__main__":
 
     # args = parser.parse_args()
 
-    main('AF_1.json', '1')
+    main('AF_3.json', '2')
 
     # main(args.file_name, args.claimed_argument)
