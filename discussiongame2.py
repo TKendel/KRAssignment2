@@ -56,16 +56,16 @@ class DiscussionGame:
 
         potential_attackers = set(self.framework.get_attackers(last_out_argument))
         if not potential_attackers:
-            return "Opponent wins (Rule 3)", True
+            return "Opponent wins (rule 3)", True
 
-        preferred_attackers = potential_attackers & self.preferred_union
+        preferred_attackers = potential_attackers.intersection(self.preferred_union)
         if preferred_attackers:
             chosen_argument = random.choice(tuple(preferred_attackers))
         else:
             chosen_argument = random.choice(tuple(potential_attackers))
 
         if chosen_argument in self.OUT:
-            return "Proponent wins (Rule 2)", True
+            return "Proponent wins (rule 2)", True
 
         self.IN.add(chosen_argument)
         print(f"Proponent chooses argument: {chosen_argument}")
@@ -79,19 +79,19 @@ class DiscussionGame:
     def opponent_turn(self):
         # If UNDEC is empty, proponent wins
         if not self.UNDEC:
-            return "Proponent wins (Rule 4)", True
+            return "Proponent wins (rule 4)", True
 
-        chosen_argument = input(f"Opponent, choose an argument to attack {self.UNDEC}: ")
+        chosen_argument = input(f"Opponent, choose an argument to attack with {self.UNDEC}: ")
 
         # Check if the chosen argument is valid
         while chosen_argument not in self.UNDEC:
             print("Invalid choice. Try again.")
-            chosen_argument = input(f"Opponent, choose an argument to attack {self.UNDEC}: ")
+            chosen_argument = input(f"Opponent, choose an argument to attack with {self.UNDEC}: ")
 
         print(f"Opponent chooses argument: {chosen_argument}")
 
         if chosen_argument in self.IN:
-            return "Opponent wins (Rule 1)", True
+            return "Opponent wins (rule 1)", True
 
         # Move chosen argument from UNDEC to OUT
         self.UNDEC.remove(chosen_argument)
