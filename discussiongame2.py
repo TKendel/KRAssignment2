@@ -1,6 +1,7 @@
 import json
 import random
 import argparse
+import timeit
 from itertools import combinations
 
 class ArgumentationFramework:
@@ -140,6 +141,6 @@ if __name__ == "__main__":
 
     # args = parser.parse_args()
 
-    main('AF_3.json', '2')
+    main('AF_4.json', '5')
 
     # main(args.file_name, args.claimed_argument)
