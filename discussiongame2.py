@@ -7,6 +7,7 @@ class ArgumentationFramework:
     def __init__(self, arguments, attacks):
         self.arguments = arguments
         self.attacks = attacks
+        self.preferred_extensions = None
 
     def get_attackers(self, argument):
         return [attacker for attacker, attacked in self.attacks if attacked == argument]
@@ -35,11 +36,11 @@ class ArgumentationFramework:
             if self.is_admissible(subset):
                 if not any(subset < ext for ext in preferred_extensions):
                     preferred_extensions.append(subset)
+        self.preferred_extensions = preferred_extensions
         return preferred_extensions
 
     def is_credulously_accepted(self, argument):
-        preferred_extensions = self.find_preferred_extensions(self.arguments, self.attacks)
-        return any(argument in ext for ext in preferred_extensions)
+        return any(argument in ext for ext in self.preferred_extensions)
 
 class DiscussionGame:
     def __init__(self, framework, claimed_argument):
@@ -128,6 +129,8 @@ def main(file_name, claimed_argument):
     
     game = DiscussionGame(framework, claimed_argument)
     game.play_game()
+    credulously_accepted = framework.is_credulously_accepted(claimed_argument)
+    print(f"\nIs Argument '{claimed_argument}' credulously accepted in the preffered semantic? \nResponse: {credulously_accepted}")
 
 
 if __name__ == "__main__":
