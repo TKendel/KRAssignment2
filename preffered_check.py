@@ -1,4 +1,5 @@
 import json
+import argparse
 from timeit import default_timer as timer
 from itertools import combinations
 
@@ -61,9 +62,10 @@ def main(file_name, claimed_argument):
     print(f"Running time: {running_time} seconds")
 
 if __name__ == "__main__":
-    # parser = argparse.ArgumentParser(description="Run a discussion game based on an argumentation framework.")
-    # parser.add_argument("file_name", type=str, help="JSON file containing the argumentation framework.")
-    # parser.add_argument("claimed_argument", type=str, help="The claimed argument to start the game.")
+    parser = argparse.ArgumentParser(description="Run a discussion game based on an argumentation framework.")
+    parser.add_argument("file_name", type=str, help="JSON file containing the argumentation framework.")
+    parser.add_argument("claimed_argument", type=str, help="The claimed argument to start the game.")
 
-    # args = parser.parse_args()
-    main('AF_4.json', '5')    
+    args = parser.parse_args()
+
+    main(args.file_name, args.claimed_argument)

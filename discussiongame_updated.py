@@ -135,12 +135,10 @@ def main(file_name, claimed_argument):
 
 
 if __name__ == "__main__":
-    # parser = argparse.ArgumentParser(description="Run a discussion game based on an argumentation framework.")
-    # parser.add_argument("file_name", type=str, help="JSON file containing the argumentation framework.")
-    # parser.add_argument("claimed_argument", type=str, help="The claimed argument to start the game.")
+    parser = argparse.ArgumentParser(description="Run a discussion game based on an argumentation framework.")
+    parser.add_argument("file_name", type=str, help="JSON file containing the argumentation framework.")
+    parser.add_argument("claimed_argument", type=str, help="The claimed argument to start the game.")
 
-    # args = parser.parse_args()
+    args = parser.parse_args()
 
-    main('AF_4.json', '5')
-
-    # main(args.file_name, args.claimed_argument)
+    main(args.file_name, args.claimed_argument)
